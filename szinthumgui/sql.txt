@@ -10,3 +10,8 @@ create table employees(
 	salary double,
 	birthdate date
 );
+
+grant all privileges
+on szinthum. *
+to szinthum@localhost
+identified by 'titok';
