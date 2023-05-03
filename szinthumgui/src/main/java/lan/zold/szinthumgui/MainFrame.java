@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -167,6 +168,11 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel6.add(nextButton);
 
         aboutButton.setText("Névjegy");
+        aboutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aboutButtonActionPerformed(evt);
+            }
+        });
         jPanel6.add(aboutButton);
 
         saveButton.setText("Rögzit");
@@ -198,6 +204,14 @@ public class MainFrame extends javax.swing.JFrame {
         startSave();
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    private void aboutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutButtonActionPerformed
+        startAbout();
+    }//GEN-LAST:event_aboutButtonActionPerformed
+
+    
+    private void startAbout(){
+        JOptionPane.showMessageDialog(this, "Baráth Dávid");
+    }
     private void startSave(){
         try{
             tryStartSave();
