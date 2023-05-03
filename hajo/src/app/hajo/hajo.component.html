@@ -7,14 +7,17 @@
       <th>Szállító</th>
     </thead>
     <tbody>
-      <!-- <tr *ngFor="let ship of ships">
+      <tr *ngFor="let ship of ships">
         <td>{{ship.name}}</td>
         <td>{{ship.length}}</td>
         <td>{{ship.price}}</td>
         <td>{{ship.person}}</td>
         <td>{{ship.trailer}}</td>
+        <td>
+          <button (click)="deleteShip(ship.id)">Törlés</button>
+        </td>
 
-      </tr> -->
+      </tr>
     </tbody>
   </table>
 </div>
