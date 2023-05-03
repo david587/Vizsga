@@ -10,15 +10,19 @@ public class Employee {
     Double salary;
     LocalDate birthdate;
 
-    public Employee(Integer id, String name, String city, Double salary, LocalDate birthdate) {
-        this.id = id;
+    public Employee(String name, String city, Double salary, LocalDate birthdate) {
         this.name = name;
         this.city = city;
         this.salary = salary;
         this.birthdate = birthdate;
     }
 
-    public Employee() {
+    public Employee(Integer id,String name, String city, Double salary, LocalDate birthdate) {
+        this.id = id;
+        this.name = name;
+        this.city = city;
+        this.salary = salary;
+        this.birthdate = birthdate;
     }
 
     

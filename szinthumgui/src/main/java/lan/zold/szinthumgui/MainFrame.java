@@ -227,7 +227,13 @@ public class MainFrame extends javax.swing.JFrame {
         String url = "jdbc:mariadb://localhost:3306/szinthum";
         con= DriverManager.getConnection(url, "szinthum","titok");
         
-        for(Employee emp: this.employeeList){
+        Employee emp = new Employee(
+                nameField.getText(),
+                cityField.getText(),
+                Double.parseDouble(salaryField.getText()),
+                LocalDate.parse(birthdateField.getText())
+        );
+        
             String sql = "insert into employees" +
                    "(name,city,salary,birthdate) values "+
                     "(?,?,?,?)";
@@ -238,7 +244,7 @@ public class MainFrame extends javax.swing.JFrame {
             pstmt.setDate(4,java.sql.Date.valueOf(emp.birthdate));
             //futtatás
             pstmt.execute();
-        }
+       
         System.out.println("beszúrás vége");
     }
     
