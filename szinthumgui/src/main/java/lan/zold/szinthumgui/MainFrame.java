@@ -6,6 +6,10 @@ package lan.zold.szinthumgui;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -93,12 +97,12 @@ public class MainFrame extends javax.swing.JFrame {
         previousButton = new javax.swing.JButton();
         nextButton = new javax.swing.JButton();
         aboutButton = new javax.swing.JButton();
-        exitButton = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel1.setText("id");
         jPanel1.add(jLabel1);
@@ -112,7 +116,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1);
 
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel2.setText("Név");
         jPanel2.add(jLabel2);
@@ -120,7 +124,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2);
 
-        jPanel3.setLayout(new java.awt.GridLayout());
+        jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel3.setText("Település");
         jPanel3.add(jLabel3);
@@ -128,7 +132,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         getContentPane().add(jPanel3);
 
-        jPanel4.setLayout(new java.awt.GridLayout());
+        jPanel4.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel4.setText("Fizetés");
         jPanel4.add(jLabel4);
@@ -136,7 +140,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         getContentPane().add(jPanel4);
 
-        jPanel5.setLayout(new java.awt.GridLayout());
+        jPanel5.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel5.setText("Születés");
         jPanel5.add(jLabel5);
@@ -144,7 +148,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         getContentPane().add(jPanel5);
 
-        jPanel6.setLayout(new java.awt.GridLayout());
+        jPanel6.setLayout(new java.awt.GridLayout(1, 0));
 
         previousButton.setText("<");
         previousButton.addActionListener(new java.awt.event.ActionListener() {
@@ -165,8 +169,13 @@ public class MainFrame extends javax.swing.JFrame {
         aboutButton.setText("Névjegy");
         jPanel6.add(aboutButton);
 
-        exitButton.setText("Kilépés");
-        jPanel6.add(exitButton);
+        saveButton.setText("Rögzit");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
+        jPanel6.add(saveButton);
 
         getContentPane().add(jPanel6);
 
@@ -185,6 +194,40 @@ public class MainFrame extends javax.swing.JFrame {
         startPrevious();
     }//GEN-LAST:event_previousButtonActionPerformed
 
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        startSave();
+    }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void startSave(){
+        try{
+            tryStartSave();
+        }
+        catch(SQLException e){
+            System.err.println("Hiba! A beszúrás sikertelen");
+            System.err.println(e.getMessage());
+            
+        }
+    }
+    private void tryStartSave() throws SQLException {
+        Connection con = null;
+        String url = "jdbc:mariadb://localhost:3306/szinthum";
+        con= DriverManager.getConnection(url, "szinthum","titok");
+        
+        for(Employee emp: this.employeeList){
+            String sql = "insert into employees" +
+                   "(name,city,salary,birthdate) values "+
+                    "(?,?,?,?)";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1,emp.name);
+            pstmt.setString(2,emp.city);
+            pstmt.setDouble(3,emp.salary);
+            pstmt.setDate(4,java.sql.Date.valueOf(emp.birthdate));
+            //futtatás
+            pstmt.execute();
+        }
+        System.out.println("beszúrás vége");
+    }
+    
     private void startNext(){
         if(this.actEmp < this.employeeList.size()-1){
              this.actEmp++;
@@ -239,7 +282,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton aboutButton;
     private javax.swing.JTextField birthdateField;
     private javax.swing.JTextField cityField;
-    private javax.swing.JButton exitButton;
     private javax.swing.JTextField idField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -256,5 +298,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton nextButton;
     private javax.swing.JButton previousButton;
     private javax.swing.JTextField salaryField;
+    private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 }
