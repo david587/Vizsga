@@ -19,9 +19,9 @@ class ShipController extends Controller
     }
 
     public function create()
-{
-    return view('ships.create');
-}
+    {   
+        return view('ships.create');
+    }
 
 public function store(Request $request)
 {
@@ -39,13 +39,9 @@ public function update(Request $request, $id)
    return response()->json(['data' => $ship], 201);
 }
 
-public function destroy($id)
-{
-  $ship = Ship::destroy($id);
-  return response()->json(['data' => $ship], 201);
-}
-
-
-
-
+    public function destroy($id)
+        {
+    $ship = Ship::destroy($id);
+    return response()->json(['data' => $ship], 201);
+        }
 }

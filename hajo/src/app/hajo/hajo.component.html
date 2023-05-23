@@ -1,4 +1,5 @@
 <div class="container">
+  <button class="btn btn-warning my-3" data-bs-toggle="modal" data-bs-target="#addModal">Add</button>
   <table>
     <thead>
       <th>Név</th>
@@ -14,6 +15,15 @@
         <td>{{ship.person}}</td>
         <td>{{ship.trailer}}</td>
         <td>
+          <div class="row mx-2">
+            <button class="text-dark bg-warning p-2 rounded border-warning" (click)="editProduct(ship)"
+            data-bs-toggle="modal" 
+            data-bs-target="#modifyModal" >
+              Edit 
+          </button>
+          </div>
+        </td>
+        <td>
           <button (click)="deleteShip(ship.id)">Törlés</button>
         </td>
 
@@ -21,3 +31,102 @@
     </tbody>
   </table>
 </div>
+
+<!-- add modal -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Product</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body">
+        <form [formGroup]="productForm">
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name"
+            placeholder="expl:  g250" formControlName="name" >              
+          </div>
+          <div class="mb-3">
+            <label for="length" class="form-label">Length</label>
+            <input type="number" class="form-control" id="length"
+            placeholder="expl:  13" formControlName="length">              
+          </div>
+          <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" class="form-control" id="price"
+            placeholder="expl:  121" formControlName="price">              
+          </div>
+          <div class="mb-3">
+            <label for="person" class="form-label">Person</label>
+            <input type="number" class="form-control" id="person"
+            placeholder="expl:  3" formControlName="person">              
+          </div>
+          <div class="mb-3">
+            <label for="trailer" class="form-label">Trailer</label>
+            <input type="number" class="form-control" id="trailer"
+            placeholder="expl:  1" formControlName="trailer">              
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" 
+        data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary"
+        data-bs-dismiss="modal"
+        (click)="onClick()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- modify Modal -->
+  <div class="modal fade" id="modifyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Termék módosítása</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="editForm">
+            <div class="mb-3">
+              <label for="id" class="form-label">Id</label>
+              <input type="text" class="form-control" id="id" formControlName="id" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input type="text" class="form-control" formControlName="name" id="name">
+            </div>
+            <div class="mb-3">
+              <label for="name" class="form-label">Length</label>
+              <input type="text" class="form-control" formControlName="length" id="name">
+            </div>
+            <div class="mb-3">
+              <label for="price" class="form-label">Price</label>
+              <input type="text" class="form-control" id="price" formControlName="price">
+            </div>
+            <div class="mb-3">
+              <label for="price" class="form-label">Person</label>
+              <input type="text" class="form-control" id="price" formControlName="person">
+            </div>
+            <div class="mb-3">
+              <label for="price" class="form-label">Trailer</label>
+              <input type="text" class="form-control" id="price" formControlName="trailer">
+            </div>
+           
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="updateProduct()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
